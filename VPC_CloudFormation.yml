@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Create a VPC with public and private subnets, launch EC2 instances in each subnet, and set up SNS for email notification.
+
+Parameters:
+  KeyName:
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instances
+    Type: AWS::EC2::KeyPair::KeyName
+
+Resources:
+
+  PublicInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      KeyName: !Ref KeyName
+      SubnetId: !Ref PublicSubnet
+      ImageId: ami-0dee22c13ea7a9a67 # Replace with a valid AMI ID for your region
+      SecurityGroupIds:
+        - !Ref EC2SecurityGroup
+      Tags:
+        - Key: Name
+          Value: PublicInstance
+
+  PrivateInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      KeyName: !Ref KeyName
+      SubnetId: !Ref PrivateSubnet
+      ImageId: ami-07e35cd5295b56947  # Replace with a valid AMI ID for your region
+      SecurityGroupIds:
+        - !Ref EC2SecurityGroup
+      Tags:
+        - Key: Name
+          Value: PrivateInstance
+
+  Outputs:
+  PublicInstanceId:
+    Description: Public EC2 Instance ID
+    Value: !Ref PublicInstance
+
+  PrivateInstanceId:
+    Description: Private EC2 Instance ID
+    Value: !Ref PrivateInstance
