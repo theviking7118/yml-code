@@ -13,10 +13,7 @@ Resources:
     Properties:
       InstanceType: t2.micro
       KeyName: !Ref KeyName
-      SubnetId: !Ref PublicSubnet
       ImageId: ami-0dee22c13ea7a9a67 # Replace with a valid AMI ID for your region
-      SecurityGroupIds:
-        - !Ref EC2SecurityGroup
       Tags:
         - Key: Name
           Value: PublicInstance
@@ -26,10 +23,7 @@ Resources:
     Properties:
       InstanceType: t2.micro
       KeyName: !Ref KeyName
-      SubnetId: !Ref PrivateSubnet
       ImageId: ami-07e35cd5295b56947  # Replace with a valid AMI ID for your region
-      SecurityGroupIds:
-        - !Ref EC2SecurityGroup
       Tags:
         - Key: Name
           Value: PrivateInstance
